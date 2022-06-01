@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.16 <0.9.0;
+//pragma solidity >=0.5.16 <0.9.0;
+pragma solidity ^0.5.0;
 
 contract SupplyChain {
 
@@ -7,6 +8,8 @@ contract SupplyChain {
 
   uint public skuCount;
 
+  mapping(uint => Item) public items;
+  
   enum State{ForSale, Sold, Shipped, Received}
 
   struct Item {
@@ -17,8 +20,6 @@ contract SupplyChain {
     address payable seller;
     address payable buyer;
   }
-  
-  mapping(uint => Item) public items;
   
   /* 
    * Events
@@ -38,18 +39,27 @@ contract SupplyChain {
 
   // Create a modifer, `isOwner` that checks if the msg.sender is the owner of the contract
 
-  modifier isOwner(address _owner){
-    require(msg.sender == _owner);
+  modifier isOwner(){
+    require(
+      msg.sender == owner,
+      "You must be the owner to do this"
+      );
     _;
   }
 
   modifier verifyCaller(address _address) { 
-    require (msg.sender == _address); 
+    require (
+      msg.sender == _address,
+      "Sender is different from the address"
+      ); 
     _;
   }
 
   modifier paidEnough(uint _price) { 
-    require(msg.value >= _price); 
+    require(
+      msg.value >= _price,
+      "You haven't paid enough"
+      ); 
     _;
   }
 
@@ -71,25 +81,37 @@ contract SupplyChain {
 
   // modifier forSale
   modifier forSale(uint _sku) { 
-    require(items[_sku].state == State.ForSale && items[_sku].price != 0); 
+    require(
+      items[_sku].state == State.ForSale && items[_sku].price != 0,
+      "The item is not for sale"
+      ); 
     _;
   }
 
   // modifier sold(uint _sku) 
   modifier sold(uint _sku) { 
-    require(items[_sku].state == State.Sold); 
+    require(
+      items[_sku].state == State.Sold,
+      "The item is not sold"
+      ); 
     _;
   }
 
   // modifier shipped(uint _sku) 
   modifier shipped(uint _sku) { 
-    require(items[_sku].state == State.Shipped); 
+    require(
+      items[_sku].state == State.Shipped,
+      "The item is not shipped"
+      ); 
     _;
   }
 
   // modifier received(uint _sku) 
   modifier received(uint _sku) { 
-    require(items[_sku].state == State.Received); 
+    require(
+      items[_sku].state == State.Received,
+      "The item is not received"
+      ); 
     _;
   }
 
@@ -100,7 +122,8 @@ contract SupplyChain {
     skuCount = 0;
   }
 
-  function addItem(string memory _name, uint _price) public returns (bool) {
+  function addItem(string memory _name, uint _price) 
+    public returns (bool) {
     // 1. Create a new item and put in array
     // 2. Increment the skuCount by one
     // 3. Emit the appropriate event
@@ -124,11 +147,11 @@ contract SupplyChain {
       sku: skuCount, 
       price: _price, 
       state: State.ForSale, 
-      seller: msg.sender, 
-      buyer: address(0)
+      seller: (address(msg.sender)), 
+      buyer: (address(0))
     });
-    skuCount = skuCount + 1;
     emit LogForSale(skuCount);
+    skuCount = skuCount + 1;
     return true;
   }
 
@@ -151,9 +174,9 @@ contract SupplyChain {
     checkValue(sku) 
   {
     items[sku].state = State.Sold;
-    items[sku].buyer = msg.sender;
-    emit LogSold(items[sku].sku);
+    items[sku].buyer = (address(msg.sender));
     items[sku].seller.transfer(items[sku].price);
+    emit LogSold(items[sku].sku);
   }
 
   // 1. Add modifiers to check:
@@ -195,5 +218,15 @@ contract SupplyChain {
     seller = items[_sku].seller;
     buyer = items[_sku].buyer;
     return (name, sku, price, state, seller, buyer);
+  }
+
+  // For debugging
+  function fetchBalances(uint _sku) public view
+    returns (uint price, uint seller, uint buyer)
+  {
+    price = items[_sku].price;
+    seller = items[_sku].seller.balance;
+    buyer = items[_sku].buyer.balance;
+    return (price, seller, buyer);
   }
 }
