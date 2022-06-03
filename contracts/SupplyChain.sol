@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-//pragma solidity >=0.5.16 <0.9.0;
-pragma solidity ^0.5.0;
+pragma solidity >=0.5.16 <0.9.0;
+//pragma solidity ^0.5.0;
 
 contract SupplyChain {
 
@@ -41,8 +41,8 @@ contract SupplyChain {
 
   modifier isOwner(){
     require(
-      msg.sender == owner,
-      "You must be the owner to do this"
+      msg.sender == owner
+      //"You must be the owner to do this"
       );
     _;
   }
@@ -50,7 +50,7 @@ contract SupplyChain {
   modifier verifyCaller(address _address) { 
     require (
       msg.sender == _address,
-      "Sender is different from the address"
+      "VM Exception while processing transaction: revert"
       ); 
     _;
   }
@@ -58,7 +58,7 @@ contract SupplyChain {
   modifier paidEnough(uint _price) { 
     require(
       msg.value >= _price,
-      "You haven't paid enough"
+      "VM Exception while processing transaction: revert"
       ); 
     _;
   }
@@ -82,8 +82,9 @@ contract SupplyChain {
   // modifier forSale
   modifier forSale(uint _sku) { 
     require(
-      items[_sku].state == State.ForSale && items[_sku].price != 0,
-      "The item is not for sale"
+      items[_sku].state == State.ForSale 
+        && items[_sku].price != 0
+      //"The item is not for sale"
       ); 
     _;
   }
@@ -91,8 +92,8 @@ contract SupplyChain {
   // modifier sold(uint _sku) 
   modifier sold(uint _sku) { 
     require(
-      items[_sku].state == State.Sold,
-      "The item is not sold"
+      items[_sku].state == State.Sold
+      //"The item is not sold"
       ); 
     _;
   }
@@ -100,8 +101,8 @@ contract SupplyChain {
   // modifier shipped(uint _sku) 
   modifier shipped(uint _sku) { 
     require(
-      items[_sku].state == State.Shipped,
-      "The item is not shipped"
+      items[_sku].state == State.Shipped
+      //"The item is not shipped"
       ); 
     _;
   }
@@ -109,8 +110,8 @@ contract SupplyChain {
   // modifier received(uint _sku) 
   modifier received(uint _sku) { 
     require(
-      items[_sku].state == State.Received,
-      "The item is not received"
+      items[_sku].state == State.Received
+      //"The item is not received"
       ); 
     _;
   }

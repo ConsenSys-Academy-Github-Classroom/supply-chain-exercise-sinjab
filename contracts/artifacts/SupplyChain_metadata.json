@@ -1,12 +1,13 @@
 {
 	"compiler": {
-		"version": "0.8.6+commit.11564f7e"
+		"version": "0.5.17+commit.d19bba13"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
 				"inputs": [],
+				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -63,6 +64,7 @@
 				"type": "event"
 			},
 			{
+				"constant": false,
 				"inputs": [
 					{
 						"internalType": "string",
@@ -83,10 +85,12 @@
 						"type": "bool"
 					}
 				],
+				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
+				"constant": false,
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -96,10 +100,43 @@
 				],
 				"name": "buyItem",
 				"outputs": [],
+				"payable": true,
 				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_sku",
+						"type": "uint256"
+					}
+				],
+				"name": "fetchBalances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "seller",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "buyer",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -140,10 +177,12 @@
 						"type": "address"
 					}
 				],
+				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"constant": true,
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -184,10 +223,12 @@
 						"type": "address"
 					}
 				],
+				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"constant": true,
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -197,10 +238,12 @@
 						"type": "address"
 					}
 				],
+				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			},
 			{
+				"constant": false,
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -210,10 +253,12 @@
 				],
 				"name": "receiveItem",
 				"outputs": [],
+				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
+				"constant": false,
 				"inputs": [
 					{
 						"internalType": "uint256",
@@ -223,10 +268,12 @@
 				],
 				"name": "shipItem",
 				"outputs": [],
+				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
+				"constant": true,
 				"inputs": [],
 				"name": "skuCount",
 				"outputs": [
@@ -236,30 +283,24 @@
 						"type": "uint256"
 					}
 				],
+				"payable": false,
 				"stateMutability": "view",
 				"type": "function"
 			}
 		],
 		"devdoc": {
-			"kind": "dev",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		},
 		"userdoc": {
-			"kind": "user",
-			"methods": {},
-			"version": 1
+			"methods": {}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
 			"contracts/SupplyChain.sol": "SupplyChain"
 		},
-		"evmVersion": "berlin",
+		"evmVersion": "istanbul",
 		"libraries": {},
-		"metadata": {
-			"bytecodeHash": "ipfs"
-		},
 		"optimizer": {
 			"enabled": false,
 			"runs": 200
@@ -268,11 +309,10 @@
 	},
 	"sources": {
 		"contracts/SupplyChain.sol": {
-			"keccak256": "0x7e20447eac6ca0bb82e60737976c8d8f51bf64c7a25ff68a3238cb8f40d92347",
-			"license": "MIT",
+			"keccak256": "0x925bd0a9676e2ee23b5dcd9f8f5c7e717ce4f77d7a3f1d983dfb10e99fe14fae",
 			"urls": [
-				"bzz-raw://f7a3a17b99a6d1979022253276e7122fe3fd93a8ca75b187e55f2daee2dfff2a",
-				"dweb:/ipfs/QmcPXo1KuGRzn7vySn7wk8mgFvBNiaVUWGuEaA4BbnTNnx"
+				"bzz-raw://8843b4c3ae938e5f642e4d33069263db8ae1f1c6e4028549cdd017082afa6bc1",
+				"dweb:/ipfs/QmSR7htCWEBzzaxVt6cpBcBtq4kpernz8253zPs17q2LKs"
 			]
 		}
 	},
